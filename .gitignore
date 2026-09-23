@@ -21,3 +21,6 @@ powerbi/*.pbix
 powerbi/**/.pbi/
 powerbi/**/.platform
 powerbi/*.BACKUP*.pbix
+
+# 复制过程产生的重复嵌套目录
+Olist-GitHub/
