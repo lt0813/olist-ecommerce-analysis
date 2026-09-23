@@ -1,0 +1,33 @@
+model Model
+	culture: zh-CN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: zh-CN
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["olist v_order_item_analytics","olist v_category_analytics","olist v_seller_risk_analytics","olist v_order_analytics","olist v_customer_analytics"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table v_order_item_analytics
+ref table DateTableTemplate_c985f71e-3e15-4b6b-8e1f-8059b0306dfb
+ref table LocalDateTable_27ca5107-54a6-408f-9353-10c3c38932eb
+ref table v_category_analytics
+ref table v_seller_risk_analytics
+ref table v_order_analytics
+ref table LocalDateTable_df0f943a-cf06-44c7-9f39-36bef491b855
+ref table LocalDateTable_ce6dc1ab-1ed2-49c4-9244-d71829eba335
+ref table LocalDateTable_89e42764-f396-4543-9bbd-e133a964aa7c
+ref table LocalDateTable_10283790-163d-4fca-8318-a9e1c38b48e0
+ref table LocalDateTable_09a36fdb-cfe5-44e1-a871-7f1897ddc884
+ref table LocalDateTable_d45825dc-0c30-40ef-892b-07ff982093a6
+ref table v_customer_analytics
+ref table LocalDateTable_f2955dae-e5ed-4068-9688-bd1029058657
+ref table LocalDateTable_3134e3f4-d405-48ce-95e0-6887831d85a6
+
+ref cultureInfo zh-CN
+

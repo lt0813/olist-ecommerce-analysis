@@ -1,0 +1,66 @@
+relationship 920a9861-3ee2-4fad-a22f-5c81297cc446
+	joinOnDateBehavior: datePartOnly
+	fromColumn: v_order_item_analytics.下单日期
+	toColumn: LocalDateTable_27ca5107-54a6-408f-9353-10c3c38932eb.Date
+
+relationship AutoDetected_02d6f884-8a89-4bef-8e51-442cb6fd71b0
+	fromColumn: v_order_item_analytics.商品类目
+	toColumn: v_category_analytics.商品类目
+
+relationship AutoDetected_4d7289c6-5517-4c59-8580-3221786b1d26
+	fromColumn: v_order_item_analytics.seller_id
+	toColumn: v_seller_risk_analytics.seller_id
+
+relationship ba30f5f6-6ae1-4e1c-947d-b8184ae98453
+	joinOnDateBehavior: datePartOnly
+	fromColumn: v_order_analytics.下单日期
+	toColumn: LocalDateTable_df0f943a-cf06-44c7-9f39-36bef491b855.Date
+
+relationship c1c68488-550c-4135-94cf-2a3a0413e3d1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: v_order_analytics.order_purchase_timestamp
+	toColumn: LocalDateTable_ce6dc1ab-1ed2-49c4-9244-d71829eba335.Date
+
+relationship d2450170-ba8b-40bd-ab3e-2e1c8126bac4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: v_order_analytics.order_approved_at
+	toColumn: LocalDateTable_89e42764-f396-4543-9bbd-e133a964aa7c.Date
+
+relationship e9a9efb0-8dd7-4d4c-9efa-9eff462de157
+	joinOnDateBehavior: datePartOnly
+	fromColumn: v_order_analytics.order_delivered_carrier_date
+	toColumn: LocalDateTable_10283790-163d-4fca-8318-a9e1c38b48e0.Date
+
+relationship b93a41ba-d694-4146-be5e-34f94fb4ee8a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: v_order_analytics.order_delivered_customer_date
+	toColumn: LocalDateTable_09a36fdb-cfe5-44e1-a871-7f1897ddc884.Date
+
+relationship d8e405f3-d582-4267-ba4a-824284ff6bfe
+	joinOnDateBehavior: datePartOnly
+	fromColumn: v_order_analytics.order_estimated_delivery_date
+	toColumn: LocalDateTable_d45825dc-0c30-40ef-892b-07ff982093a6.Date
+
+relationship bc993d37-3de8-48bc-8fe6-c39b85d440fb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: v_customer_analytics.首购时间
+	toColumn: LocalDateTable_f2955dae-e5ed-4068-9688-bd1029058657.Date
+
+relationship 6343cfb7-4b42-4578-968a-a27f79867705
+	joinOnDateBehavior: datePartOnly
+	fromColumn: v_customer_analytics.最近购买时间
+	toColumn: LocalDateTable_3134e3f4-d405-48ce-95e0-6887831d85a6.Date
+
+relationship AutoDetected_273cb816-a51c-413b-9fd0-3c91cde3195c
+	fromColumn: v_order_item_analytics.order_id
+	toColumn: v_order_analytics.order_id
+
+relationship AutoDetected_481e769d-3710-40d7-8124-568db1e2ccb3
+	fromColumn: v_order_item_analytics.customer_unique_id
+	toColumn: v_customer_analytics.customer_unique_id
+
+relationship AutoDetected_f4f10201-0a4a-4c53-a4c1-902a53bc1c92
+	isActive: false
+	fromColumn: v_order_analytics.customer_unique_id
+	toColumn: v_customer_analytics.customer_unique_id
+

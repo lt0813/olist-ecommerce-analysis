@@ -1,0 +1,370 @@
+table v_order_analytics
+	lineageTag: 3a28c8fc-aa7a-412f-9719-77bb83e66e40
+
+	measure GMV = CALCULATE(SUM('v_order_analytics'[recognized_gmv]), 'v_order_analytics'[is_delivered] = 1)
+		formatString: #,0.00
+		lineageTag: bbf40e7c-25b0-4dc9-837c-847ada23527e
+
+	measure 成交订单量 = CALCULATE(DISTINCTCOUNT('v_order_analytics'[order_id]), 'v_order_analytics'[is_delivered] = 1)
+		formatString: #,0
+		lineageTag: a284c587-2c90-4142-9b7e-a6c3ba793e1b
+
+	measure 客单价 = DIVIDE([GMV], [成交订单量])
+		formatString: #,0.00
+		lineageTag: 5ab66df7-b04b-4665-86cf-6c0c513c59f3
+
+	measure 延迟率 = DIVIDE(CALCULATE(SUM('v_order_analytics'[是否延迟]), 'v_order_analytics'[is_delivered] = 1), CALCULATE(SUM('v_order_analytics'[has_delivery_dates]), 'v_order_analytics'[is_delivered] = 1))
+		formatString: 0.00%
+		lineageTag: 0dc643fb-39a8-4e8e-9de6-e0d36cde9084
+
+	measure 差评率 = DIVIDE(CALCULATE(SUM('v_order_analytics'[是否差评]), 'v_order_analytics'[is_delivered] = 1), CALCULATE(COUNTROWS('v_order_analytics'), 'v_order_analytics'[is_delivered] = 1, 'v_order_analytics'[review_count] > 0))
+		formatString: 0.00%
+		lineageTag: e7002537-e4fb-4bf3-9fa5-b5b3bcf67c9b
+
+	measure 平均履约天数 = CALCULATE(AVERAGE('v_order_analytics'[总履约天数]), 'v_order_analytics'[is_delivered] = 1)
+		formatString: #,0.00
+		lineageTag: df252b2e-a4d1-4883-a095-dcdead8fb076
+
+	column order_id
+		dataType: string
+		isHidden
+		lineageTag: 37eca3df-b33c-4270-8a17-d5de5364332d
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		isHidden
+		lineageTag: 7178a510-902a-4ec9-a5e4-b2e9a8b971f6
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_unique_id
+		dataType: string
+		isHidden
+		lineageTag: eb72c28b-bb12-4b2a-a3a3-d5ee1300791e
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 客户州
+		dataType: string
+		lineageTag: b0f82ca4-1d20-4767-a9ba-29bf4cb2e5d5
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_status
+		dataType: string
+		lineageTag: 994bcd7a-5ba7-47f2-b820-9e9519012763
+		summarizeBy: none
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 下单日期
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: db09ce75-9548-4c41-8865-5ccfbbd1fd69
+		summarizeBy: none
+		sourceColumn: purchase_date
+
+		variation 变体
+			isDefault
+			relationship: ba30f5f6-6ae1-4e1c-947d-b8184ae98453
+			defaultHierarchy: LocalDateTable_df0f943a-cf06-44c7-9f39-36bef491b855.日期层次结构
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 下单月份
+		dataType: string
+		lineageTag: 45fba698-91a5-4ed7-bee1-c61484ba7ee8
+		summarizeBy: none
+		sourceColumn: purchase_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_purchase_timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b496cb42-4b19-458a-9b6f-0b32eb4f067e
+		summarizeBy: none
+		sourceColumn: order_purchase_timestamp
+
+		variation 变体
+			isDefault
+			relationship: c1c68488-550c-4135-94cf-2a3a0413e3d1
+			defaultHierarchy: LocalDateTable_ce6dc1ab-1ed2-49c4-9244-d71829eba335.日期层次结构
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_approved_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 180008d4-2fea-4deb-bbdd-a04ed3ce805b
+		summarizeBy: none
+		sourceColumn: order_approved_at
+
+		variation 变体
+			isDefault
+			relationship: d2450170-ba8b-40bd-ab3e-2e1c8126bac4
+			defaultHierarchy: LocalDateTable_89e42764-f396-4543-9bbd-e133a964aa7c.日期层次结构
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_delivered_carrier_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 56c7520b-7e62-4a77-81fb-ae8108bcb151
+		summarizeBy: none
+		sourceColumn: order_delivered_carrier_date
+
+		variation 变体
+			isDefault
+			relationship: e9a9efb0-8dd7-4d4c-9efa-9eff462de157
+			defaultHierarchy: LocalDateTable_10283790-163d-4fca-8318-a9e1c38b48e0.日期层次结构
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_delivered_customer_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6c416233-637a-42e5-83c2-d76c0fa74977
+		summarizeBy: none
+		sourceColumn: order_delivered_customer_date
+
+		variation 变体
+			isDefault
+			relationship: b93a41ba-d694-4146-be5e-34f94fb4ee8a
+			defaultHierarchy: LocalDateTable_09a36fdb-cfe5-44e1-a871-7f1897ddc884.日期层次结构
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_estimated_delivery_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2b5394f7-4c36-4746-acdf-1e534d3a32df
+		summarizeBy: none
+		sourceColumn: order_estimated_delivery_date
+
+		variation 变体
+			isDefault
+			relationship: d8e405f3-d582-4267-ba4a-824284ff6bfe
+			defaultHierarchy: LocalDateTable_d45825dc-0c30-40ef-892b-07ff982093a6.日期层次结构
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_count
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9c00396d-cecc-4883-9641-d58a87ef756a
+		summarizeBy: sum
+		sourceColumn: payment_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_total
+		dataType: double
+		isHidden
+		lineageTag: 5cee09da-2aa8-4480-a96d-e1c4f751f8b8
+		summarizeBy: sum
+		sourceColumn: payment_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column payment_type_count
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f625c064-b8c4-45ab-951a-152d390cd2dc
+		summarizeBy: sum
+		sourceColumn: payment_type_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 商品行数
+		dataType: int64
+		formatString: 0
+		lineageTag: 6af1dc4c-7137-4d78-93e0-029e9235f39b
+		summarizeBy: sum
+		sourceColumn: item_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 商品金额含运费
+		dataType: double
+		lineageTag: 0091fcfc-ea14-4ea5-8f95-194839892660
+		summarizeBy: sum
+		sourceColumn: item_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 运费金额
+		dataType: double
+		lineageTag: e51c7a8c-bc78-4291-84e0-0a2d879299df
+		summarizeBy: sum
+		sourceColumn: freight_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column seller_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 08c67b51-0008-4187-9b9a-16998ce8c052
+		summarizeBy: sum
+		sourceColumn: seller_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column recognized_gmv
+		dataType: double
+		isHidden
+		lineageTag: 33de47d3-5365-4768-9501-a1463a9514c2
+		summarizeBy: sum
+		sourceColumn: recognized_gmv
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column review_count
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0d5d7439-abaa-47d6-ada4-b1f4f6dfa8c4
+		summarizeBy: sum
+		sourceColumn: review_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 订单平均评分
+		dataType: double
+		lineageTag: 2520d0ce-8a2c-4528-b2f5-50671309f4cc
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column min_review_score
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0f131c66-f3d2-45a9-84ea-2cf2386f649b
+		summarizeBy: sum
+		sourceColumn: min_review_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_delivered
+		dataType: int64
+		formatString: 0
+		lineageTag: 41c170eb-677c-43d2-8af8-9a90a768b99d
+		summarizeBy: sum
+		sourceColumn: is_delivered
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_delivery_dates
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 73592554-13d5-4e74-934c-e927f7373fa8
+		summarizeBy: sum
+		sourceColumn: has_delivery_dates
+
+		annotation SummarizationSetBy = Automatic
+
+	column 是否延迟
+		dataType: int64
+		formatString: 0
+		lineageTag: bec3e3d6-3bef-4c0e-9093-f414753c0576
+		summarizeBy: sum
+		sourceColumn: is_late
+
+		annotation SummarizationSetBy = Automatic
+
+	column 是否差评
+		dataType: int64
+		formatString: 0
+		lineageTag: c5efb69f-6224-4f7b-9fe2-81d8fabf0553
+		summarizeBy: sum
+		sourceColumn: is_bad_review
+
+		annotation SummarizationSetBy = Automatic
+
+	column approval_days
+		dataType: double
+		lineageTag: ae824c9d-ed62-4f0e-a512-1a6dd5c79cf3
+		summarizeBy: sum
+		sourceColumn: approval_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column seller_handling_days
+		dataType: double
+		lineageTag: 9bba28a5-09e4-4fe5-a204-34fc4a960495
+		summarizeBy: sum
+		sourceColumn: seller_handling_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column carrier_delivery_days
+		dataType: double
+		lineageTag: 97cbe34f-047d-4bdd-9f96-7aca3342de92
+		summarizeBy: sum
+		sourceColumn: carrier_delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 总履约天数
+		dataType: double
+		lineageTag: dad16551-4514-4294-b903-d180fe1a4923
+		summarizeBy: sum
+		sourceColumn: total_delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estimated_delay_days
+		dataType: double
+		lineageTag: 9eb19386-7662-4009-930c-e21854bd32f8
+		summarizeBy: sum
+		sourceColumn: estimated_delay_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'olist v_order_analytics' = m
+		mode: import
+		source =
+				let
+				    源 = MySQL.Database("127.0.0.1:3306", "olist", [ReturnSingleDatabase=true]),
+				    olist_v_order_analytics = 源{[Schema="olist",Item="v_order_analytics"]}[Data]
+				in
+				    olist_v_order_analytics
+

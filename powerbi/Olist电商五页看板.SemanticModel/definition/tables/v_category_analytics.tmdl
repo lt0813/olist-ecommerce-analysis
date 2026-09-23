@@ -1,0 +1,142 @@
+table v_category_analytics
+	lineageTag: d99fed1d-d13c-48da-8b4d-7f7d26eecc16
+
+	measure 类目GMV总额 = SUM('v_category_analytics'[类目GMV])
+		formatString: #,0.00
+
+	measure 类目成交订单总量 = SUM('v_category_analytics'[类目成交订单数])
+		formatString: #,0
+
+	measure 类目商品行总量 = SUM('v_category_analytics'[商品行数])
+		formatString: #,0
+
+	measure 类目商品金额总额 = SUM('v_category_analytics'[类目商品金额])
+		formatString: #,0.00
+
+	measure 类目运费总额 = SUM('v_category_analytics'[类目运费金额])
+		formatString: #,0.00
+
+	column 商品类目
+		dataType: string
+		lineageTag: 918be381-94f2-4fc7-8154-b61f7d532d09
+		summarizeBy: none
+		sourceColumn: category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 类目成交订单数
+		dataType: int64
+		formatString: 0
+		lineageTag: cdbed2b9-d9fb-4ede-88c6-f8fb6cfe5d90
+		summarizeBy: none
+		sourceColumn: delivered_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column 商品行数
+		dataType: int64
+		formatString: 0
+		lineageTag: 2895cd66-c834-456f-95dd-d3a8a46610e8
+		summarizeBy: none
+		sourceColumn: item_rows
+
+		annotation SummarizationSetBy = Automatic
+
+	column 商品数
+		dataType: int64
+		formatString: 0
+		lineageTag: f2b6417b-450c-47f4-aa7a-9cd90406a570
+		summarizeBy: none
+		sourceColumn: product_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 类目GMV
+		dataType: double
+		lineageTag: a237b2fb-400d-46d0-8d1a-86288f6403b0
+		summarizeBy: none
+		sourceColumn: category_gmv
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 类目商品金额
+		dataType: double
+		lineageTag: f8470ed2-fc81-4421-867a-281bb4e37913
+		summarizeBy: none
+		sourceColumn: product_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 类目运费金额
+		dataType: double
+		lineageTag: 1712d3e1-88dd-4306-b994-be910454fdf7
+		summarizeBy: none
+		sourceColumn: freight_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 类目平均商品价格
+		dataType: double
+		lineageTag: 9afdc8e7-5302-46c8-9082-3059a9b68888
+		summarizeBy: none
+		sourceColumn: average_item_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 类目GMV占比
+		dataType: double
+		lineageTag: b43cb36e-d1f7-48f7-865d-77be4f376f61
+		summarizeBy: none
+		sourceColumn: gmv_share_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 类目延迟率
+		dataType: double
+		lineageTag: 1f4594db-de0f-418b-82c1-ec68fec48f27
+		summarizeBy: none
+		sourceColumn: late_order_rate_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 类目差评率
+		dataType: double
+		lineageTag: 900198a0-cd5f-445f-9083-5c0cbad468b6
+		summarizeBy: none
+		sourceColumn: bad_review_rate_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 类目平均评分
+		dataType: double
+		lineageTag: 3e9f213c-7b68-4655-98b0-b38dd67e15f7
+		summarizeBy: none
+		sourceColumn: average_review_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'olist v_category_analytics' = m
+		mode: import
+		source =
+				let
+				    源 = MySQL.Database("127.0.0.1:3306", "olist", [ReturnSingleDatabase=true]),
+				    olist_v_category_analytics = 源{[Schema="olist",Item="v_category_analytics"]}[Data]
+				in
+				    olist_v_category_analytics
+

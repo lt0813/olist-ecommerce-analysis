@@ -1,0 +1,87 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 618.38305001469359,
+            "y": -50
+          },
+          "nodeIndex": "v_category_analytics",
+          "nodeLineageTag": "d99fed1d-d13c-48da-8b4d-7f7d26eecc16",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1186.3830500146937,
+            "y": -33.577651020077667
+          },
+          "nodeIndex": "v_customer_analytics",
+          "nodeLineageTag": "f98a7b51-f26a-44b2-a76c-ebb20645bf12",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 902.38305001469359,
+            "y": -33.577651020077667
+          },
+          "nodeIndex": "v_order_analytics",
+          "nodeLineageTag": "3a28c8fc-aa7a-412f-9719-77bb83e66e40",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 334.20156119318511,
+            "y": -17.155302040155334
+          },
+          "nodeIndex": "v_order_item_analytics",
+          "nodeLineageTag": "c2ba10d9-1adf-4fa9-9c85-c5381b1f1e16",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": -20.014889220402495
+          },
+          "nodeIndex": "v_seller_risk_analytics",
+          "nodeLineageTag": "07a68f72-8b51-4d21-baae-9547a3686037",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "所有表",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "所有表",
+  "defaultDiagram": "所有表"
+}

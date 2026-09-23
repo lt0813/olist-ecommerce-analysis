@@ -1,0 +1,152 @@
+table v_customer_analytics
+	lineageTag: f98a7b51-f26a-44b2-a76c-ebb20645bf12
+
+	measure 成交客户数 = COUNTROWS('v_customer_analytics')
+		formatString: #,0
+		lineageTag: b00b15e7-4e54-43b0-b3eb-c3dca5617436
+
+	measure 复购客户数 = SUM('v_customer_analytics'[是否复购客户])
+		formatString: #,0
+		lineageTag: 0bc14145-f06e-4d0b-acf5-6a66a8e8122c
+
+	measure 复购客户率 = DIVIDE([复购客户数], [成交客户数])
+		formatString: 0.00%
+		lineageTag: a21461ee-d75d-4959-88fd-a42e5a20403b
+
+	measure 客户平均消费 = AVERAGE('v_customer_analytics'[客户累计消费])
+		formatString: #,0.00
+		lineageTag: 3c8d242c-a2f6-46b1-8272-51386a638a72
+
+	measure 客户累计消费总额 = SUM('v_customer_analytics'[客户累计消费])
+		formatString: #,0.00
+
+	measure 客户最早首购时间 = MIN('v_customer_analytics'[首购时间])
+		formatString: General Date
+
+	measure 客户最近购买时间 = MAX('v_customer_analytics'[最近购买时间])
+		formatString: General Date
+
+	column customer_unique_id
+		dataType: string
+		isHidden
+		lineageTag: 64f18327-8ff7-43f7-9363-6700a16f543e
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 成交订单数
+		dataType: int64
+		formatString: 0
+		lineageTag: c4cc4241-f153-4e0d-b937-1086c59954f1
+		summarizeBy: sum
+		sourceColumn: delivered_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column 客户累计消费
+		dataType: double
+		lineageTag: 95030fd3-0a6c-4f05-8c87-fbff29b1d922
+		summarizeBy: sum
+		sourceColumn: customer_gmv
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 首购时间
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 68b787a8-4773-4cb1-8306-ef7b66a5924d
+		summarizeBy: none
+		sourceColumn: first_order_at
+
+		variation 变体
+			isDefault
+			relationship: bc993d37-3de8-48bc-8fe6-c39b85d440fb
+			defaultHierarchy: LocalDateTable_f2955dae-e5ed-4068-9688-bd1029058657.日期层次结构
+
+		annotation SummarizationSetBy = Automatic
+
+	column 最近购买时间
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6532d30a-bb09-4a35-9c71-4bb9ec9623b6
+		summarizeBy: none
+		sourceColumn: last_order_at
+
+		variation 变体
+			isDefault
+			relationship: 6343cfb7-4b42-4578-968a-a27f79867705
+			defaultHierarchy: LocalDateTable_3134e3f4-d405-48ce-95e0-6887831d85a6.日期层次结构
+
+		annotation SummarizationSetBy = Automatic
+
+	column reviewed_orders
+		dataType: double
+		lineageTag: be3d97da-e568-4b73-90ef-31dae6b69a1c
+		summarizeBy: sum
+		sourceColumn: reviewed_orders
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column bad_review_orders
+		dataType: double
+		lineageTag: 194f50ab-b535-4258-904f-b5c53f73dd57
+		summarizeBy: sum
+		sourceColumn: bad_review_orders
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column orders_with_delivery_dates
+		dataType: double
+		lineageTag: 0ac6d51f-15dd-498f-aab2-6e990d003960
+		summarizeBy: sum
+		sourceColumn: orders_with_delivery_dates
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column late_orders
+		dataType: double
+		lineageTag: c17f1144-d6fa-4527-9080-cab98cb804a1
+		summarizeBy: sum
+		sourceColumn: late_orders
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_review_score
+		dataType: double
+		lineageTag: 9820d194-7e78-4009-bad2-76fbc84a1f7c
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 是否复购客户
+		dataType: int64
+		formatString: 0
+		lineageTag: 14aee43c-aaa0-4a09-9b02-0c8ad7d91798
+		summarizeBy: sum
+		sourceColumn: is_repeat_customer
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'olist v_customer_analytics' = m
+		mode: import
+		source =
+				let
+				    源 = MySQL.Database("127.0.0.1:3306", "olist", [ReturnSingleDatabase=true]),
+				    olist_v_customer_analytics = 源{[Schema="olist",Item="v_customer_analytics"]}[Data]
+				in
+				    olist_v_customer_analytics
+

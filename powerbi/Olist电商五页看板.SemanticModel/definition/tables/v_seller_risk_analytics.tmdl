@@ -1,0 +1,212 @@
+table v_seller_risk_analytics
+	lineageTag: 07a68f72-8b51-4d21-baae-9547a3686037
+
+	measure 风险卖家数 = CALCULATE(COUNTROWS('v_seller_risk_analytics'), 'v_seller_risk_analytics'[是否风险卖家] = 1)
+		formatString: #,0
+		lineageTag: 558277a4-8f83-48b0-bf9d-30380f5b6204
+
+	measure 风险卖家GMV = CALCULATE(SUM('v_seller_risk_analytics'[卖家GMV]), 'v_seller_risk_analytics'[是否风险卖家] = 1)
+		formatString: #,0.00
+		lineageTag: 56c705f5-4c96-4024-9cc4-f333d6a76c8b
+
+	measure 风险卖家GMV占比 = DIVIDE([风险卖家GMV], SUM('v_seller_risk_analytics'[卖家GMV]))
+		formatString: 0.00%
+		lineageTag: 30a1c3a0-869a-4d8c-abf1-07cd748ef018
+
+	measure 风险卖家平均延迟率 = CALCULATE(AVERAGE('v_seller_risk_analytics'[卖家延迟率]), 'v_seller_risk_analytics'[是否风险卖家] = 1)
+		formatString: 0.00%
+		lineageTag: 1b8fe9af-1223-4529-b941-448e308652c6
+
+	measure 风险卖家平均差评率 = CALCULATE(AVERAGE('v_seller_risk_analytics'[卖家差评率]), 'v_seller_risk_analytics'[是否风险卖家] = 1)
+		formatString: 0.00%
+		lineageTag: 1105a1f4-9ddc-47e4-86c7-3a25dd57b8da
+
+	measure 卖家GMV总额 = SUM('v_seller_risk_analytics'[卖家GMV])
+		formatString: #,0.00
+
+	column seller_id
+		dataType: string
+		isHidden
+		lineageTag: a1b91732-63bc-44c7-8352-9ea2b72020be
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 卖家简称
+		dataType: string
+		lineageTag: e31c9665-bb01-4cb1-a16f-bbf2fe55db43
+		summarizeBy: none
+		sourceColumn: seller_short_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 卖家州
+		dataType: string
+		lineageTag: a4ada2b1-d026-44fc-90e1-4b0c12c47c89
+		summarizeBy: none
+		sourceColumn: seller_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column 卖家城市
+		dataType: string
+		lineageTag: 06aacd65-6e04-4614-853c-6a04c067cee6
+		summarizeBy: none
+		sourceColumn: seller_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column 卖家成交订单数
+		dataType: int64
+		formatString: 0
+		lineageTag: dbae915f-bd2a-43e9-917d-4b58e51904ff
+		summarizeBy: none
+		sourceColumn: delivered_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column 卖家GMV
+		dataType: double
+		lineageTag: e9949921-1c9b-4962-848c-6ec211e3e5a7
+		summarizeBy: none
+		sourceColumn: seller_gmv
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 延迟订单数
+		dataType: double
+		lineageTag: ed7d4020-d338-4f4a-8f78-02d69b78aca2
+		summarizeBy: none
+		sourceColumn: late_orders
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 有履约日期订单数
+		dataType: double
+		lineageTag: d5924c61-1ef6-423f-b344-e7a23012c45a
+		summarizeBy: none
+		sourceColumn: orders_with_delivery_dates
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 卖家延迟率
+		dataType: double
+		lineageTag: 2a168587-b7b4-416e-9363-189ceb6dc04b
+		summarizeBy: none
+		sourceColumn: late_order_rate_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 有评价订单数
+		dataType: double
+		lineageTag: 4304fe33-2fdd-45a2-88c4-b9a46c4d4423
+		summarizeBy: none
+		sourceColumn: reviewed_orders
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 差评订单数
+		dataType: double
+		lineageTag: e10a26b5-b62d-478e-859b-c95a8ff5e5b6
+		summarizeBy: none
+		sourceColumn: bad_review_orders
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 卖家差评率
+		dataType: double
+		lineageTag: 42dfd17c-f3d9-4c5c-9fa0-1aac3314d8eb
+		summarizeBy: none
+		sourceColumn: bad_review_rate_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 卖家处理天数
+		dataType: double
+		lineageTag: 74c7e5a5-5ae7-49ce-9caa-598d6ca78fbc
+		summarizeBy: none
+		sourceColumn: average_seller_handling_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 运输配送天数
+		dataType: double
+		lineageTag: 5afc3118-c5eb-474c-81bc-4093de886f47
+		summarizeBy: none
+		sourceColumn: average_carrier_delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 卖家平均评分
+		dataType: double
+		lineageTag: bedcb3ba-85b5-4521-b9a8-14f9eef7f723
+		summarizeBy: none
+		sourceColumn: average_review_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 卖家GMV占比
+		dataType: double
+		lineageTag: 20ad8717-7295-469b-a7f5-d1ebe2413e89
+		summarizeBy: none
+		sourceColumn: seller_gmv_share_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 风险层级
+		dataType: string
+		lineageTag: edd91e2b-cb16-43f6-a1fd-66bbfdc9af4f
+		summarizeBy: none
+		sourceColumn: risk_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column 风险原因
+		dataType: string
+		lineageTag: 74ec6160-b30e-4f1f-ab2f-ff75fc395284
+		summarizeBy: none
+		sourceColumn: risk_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 是否风险卖家
+		dataType: int64
+		formatString: 0
+		lineageTag: cac44acc-6433-4343-8df1-0750c620fdde
+		summarizeBy: none
+		sourceColumn: is_risk_candidate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'olist v_seller_risk_analytics' = m
+		mode: import
+		source =
+				let
+				    源 = MySQL.Database("127.0.0.1:3306", "olist", [ReturnSingleDatabase=true]),
+				    olist_v_seller_risk_analytics = 源{[Schema="olist",Item="v_seller_risk_analytics"]}[Data]
+				in
+				    olist_v_seller_risk_analytics
+

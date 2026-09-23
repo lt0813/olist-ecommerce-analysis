@@ -1,0 +1,23 @@
+# 本地环境
+.env
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+
+# 原始数据
+Olist的巴西电子商务公共数据集/
+data/*.csv
+*.csv
+!python/outputs/customer_analysis/rfm_segment_summary.csv
+!python/outputs/customer_analysis/cohort_retention_long.csv
+!python/outputs/customer_analysis/cohort_retention_matrix.csv
+!python/outputs/customer_analysis/repurchase_interval_summary.csv
+
+# Power BI 本地与二进制缓存
+powerbi/*.pbix
+powerbi/**/.pbi/
+powerbi/**/.platform
+powerbi/*.BACKUP*.pbix
